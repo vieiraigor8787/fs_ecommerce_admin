@@ -1,5 +1,22 @@
-import { SignIn } from '@clerk/nextjs'
+'use client'
+
+import { useState, useEffect } from 'react'
+
+import Modal from '@/components/ui/modal'
 
 export default function SetupPage() {
-  return <div className="p-4">this is a protected route</div>
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  return (
+    mounted && (
+      <div className="p-4">
+        <Modal title="ola" description="ola, mundo" isOpen onClose={() => {}}>
+          child
+        </Modal>
+      </div>
+    )
+  )
 }
