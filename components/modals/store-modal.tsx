@@ -1,7 +1,7 @@
 import { useStoreModal } from '@/hooks/useStoreModal'
 import Modal from '@/components/ui/modal'
 
-export const storeModal = () => {
+export const StoreModal = () => {
   const { isOpen, onClose } = useStoreModal()
 
   return (
