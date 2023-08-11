@@ -48,7 +48,7 @@ export const StoreModal = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Nome</FormLabel>
                   <FormControl>
                     <Input placeholder="p.ex: ecommerce" {...field} />
                   </FormControl>
