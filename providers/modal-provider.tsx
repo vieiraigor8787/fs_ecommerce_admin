@@ -1,8 +1,10 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
 import { StoreModal } from '@/components/modals/store-modal'
 
-export const modalProvider = () => {
+export const ModalProvider = () => {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {

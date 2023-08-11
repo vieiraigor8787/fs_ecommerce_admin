@@ -1,13 +1,17 @@
 'use client'
+import { useEffect } from 'react'
 
-import Modal from '@/components/ui/modal'
+import { useStoreModal } from '@/hooks/useStoreModal'
 
 export default function SetupPage() {
-  return (
-    <div className="p-4">
-      <Modal title="ola" description="ola, mundo" isOpen onClose={() => {}}>
-        child
-      </Modal>
-    </div>
-  )
+  const isOpen = useStoreModal((state) => state.isOpen)
+  const onOpen = useStoreModal((state) => state.onOpen)
+
+  useEffect(() => {
+    if (!isOpen) {
+      onOpen()
+    }
+  }, [isOpen, onOpen])
+
+  return <div className="p-4">child</div>
 }
