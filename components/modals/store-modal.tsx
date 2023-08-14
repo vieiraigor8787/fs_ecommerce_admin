@@ -1,5 +1,10 @@
+'use client'
+
 import * as z from 'zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useStoreModal } from '@/hooks/useStoreModal'
 
@@ -22,6 +27,8 @@ const formSchema = z.object({
 export const StoreModal = () => {
   const { isOpen, onClose } = useStoreModal()
 
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,7 +37,16 @@ export const StoreModal = () => {
   })
 
   const onSubmitModal = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    try {
+      setLoading(true)
+
+      const response = await axios.post('api/stores', values)
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -50,17 +66,23 @@ export const StoreModal = () => {
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder="p.ex: ecommerce" {...field} />
+                    <Input
+                      disabled={loading}
+                      placeholder="p.ex: ecommerce"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage title="obrigatório" />
                 </FormItem>
               )}
             />
             <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-              <Button variant="outline" onClick={onClose}>
+              <Button disabled={loading} variant="outline" onClick={onClose}>
                 Cancelar
               </Button>
-              <Button type="submit">Continuar</Button>
+              <Button disabled={loading} type="submit">
+                Continuar
+              </Button>
             </div>
           </form>
         </Form>
