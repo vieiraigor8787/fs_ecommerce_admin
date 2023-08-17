@@ -10,7 +10,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Trash } from 'lucide-react'
 import { Billboard } from '@prisma/client'
 
-import { useOrigin } from '@/hooks/useOrigin'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Heading from '@/components/ui/heading'
@@ -24,6 +23,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { AlertModal } from '@/components/modals/alert-modal'
+import ImageUpload from '@/components/ui/image-upload'
 
 interface BillboardFormProps {
   initialData: Billboard | null
@@ -43,7 +43,6 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
   //onsubmit function
   const params = useParams()
   const router = useRouter()
-  const origin = useOrigin()
 
   const title = initialData ? 'Editar painel' : 'Criar painel'
   const description = initialData ? 'Editar um painel' : 'Adicionar novo painel'
@@ -117,6 +116,24 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Imagem de background</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    disabled={loading}
+                    value={field.value ? [field.value] : []}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange('')}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
