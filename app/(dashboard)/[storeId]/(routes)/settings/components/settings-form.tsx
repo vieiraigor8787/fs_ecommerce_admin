@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { AlertModal } from '@/components/modals/alert-modal'
+import { ApiAlert } from '@/components/api-alert'
 
 interface SettingsFormProps {
   initialData: Store
@@ -131,6 +132,10 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
           </Button>
         </form>
       </Form>
+
+      <Separator />
+
+      <ApiAlert title="teste" description="serv-teste" variant="public" />
     </>
   )
 }
