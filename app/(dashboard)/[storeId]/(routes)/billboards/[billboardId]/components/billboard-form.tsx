@@ -60,10 +60,17 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const onSubmit = async (data: BillboardFormValues) => {
     try {
       setLoading(true)
-      //route storeID
-      await axios.patch(`/api/stores/${params.storeId}`, data)
+      if (initialData) {
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          data
+        )
+      } else {
+        await axios.post(`/api/${params.storeId}/billboards`, data)
+      }
+
       router.refresh()
-      toast.success('Alterado com sucesso')
+      toast.success(toastMessage)
     } catch (error) {
       toast.error('OPS!! Algo deu errado')
       setLoading(false)
@@ -73,13 +80,15 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(`/api/stores/${params.storeId}`)
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      )
       router.refresh()
       router.push('/')
-      toast.success('Loja excluída')
+      toast.success('Painel excluído')
     } catch (error) {
       toast.error(
-        'Tenha certeza que você excluiu todos os produtos e categorias primeiro.'
+        'Primeiro tenha certeza que você excluiu todas as categorias usando este painel.'
       )
     } finally {
       setLoading(false)

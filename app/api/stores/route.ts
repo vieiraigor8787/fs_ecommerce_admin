@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     // validating required points
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 })
+      return new NextResponse('Usuário não autorizado', { status: 401 })
     }
     if (!name) {
       return new NextResponse('Nome é obrigatório', { status: 401 })
