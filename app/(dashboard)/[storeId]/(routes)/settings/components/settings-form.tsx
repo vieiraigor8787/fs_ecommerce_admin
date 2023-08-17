@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Trash } from 'lucide-react'
 import { Store } from '@prisma/client'
 
+import { useOrigin } from '@/hooks/useOrigin'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Heading from '@/components/ui/heading'
@@ -42,6 +43,7 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
   //onsubmit function
   const params = useParams()
   const router = useRouter()
+  const origin = useOrigin()
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
@@ -135,7 +137,11 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
 
       <Separator />
 
-      <ApiAlert title="teste" description="serv-teste" variant="public" />
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}}`}
+        variant="public"
+      />
     </>
   )
 }
