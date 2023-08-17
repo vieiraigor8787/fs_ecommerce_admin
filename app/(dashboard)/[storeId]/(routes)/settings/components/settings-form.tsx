@@ -1,8 +1,11 @@
 'use client'
 
+import axios from 'axios'
 import * as z from 'zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-hot-toast'
+import { useParams, useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Trash } from 'lucide-react'
 import { Store } from '@prisma/client'
@@ -34,13 +37,26 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  //onsubmit function
+  const params = useParams()
+  const router = useRouter()
+
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   })
 
   const onSubmit = async (data: SettingsFormValues) => {
-    console.log(data)
+    try {
+      setLoading(true)
+      //route storeID
+      await axios.patch(`/api/stores/${params.storeId}`, data)
+      router.refresh()
+      toast.success('Alterado com sucesso')
+    } catch (error) {
+      toast.error('OPS!! Algo deu errado')
+      setLoading(false)
+    }
   }
 
   return (
