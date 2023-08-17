@@ -22,6 +22,11 @@ export function MainNav({
       label: 'Configurações',
       active: pathname === `/${params.storeId}/settings`,
     },
+    {
+      href: `/${params.storeId}/billboards`,
+      label: 'Painel',
+      active: pathname === `/${params.storeId}/billboards`,
+    },
   ]
 
   return (
