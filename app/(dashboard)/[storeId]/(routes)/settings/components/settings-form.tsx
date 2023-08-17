@@ -50,7 +50,12 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
           title="Configurações"
           description="Configure suas preferências de loja"
         />
-        <Button variant="destructive" size="icon" onClick={() => {}}>
+        <Button
+          disabled={loading}
+          variant="destructive"
+          size="icon"
+          onClick={() => setOpen(true)}
+        >
           <Trash className="w-4 h-4" />
         </Button>
       </div>
